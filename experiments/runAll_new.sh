@@ -26,7 +26,7 @@ function setup() {
             cd testrunner4iFixPlus/
             # Get right branch of testrunner
             if [[ ! -d testrunner ]]; then
-                git clone https://github.com/ChopinLi-cp/testrunner
+                git clone https://github.com/lcpChopin/testrunner
                 (
                     cd testrunner/
                     git checkout -f testrunner4iFixPlus
@@ -35,15 +35,15 @@ function setup() {
             fi
         )
 
-        mkdir -p idflakies4iFixPlus/
+        mkdir -p iFixFlakies4iFixPlus/
         (
-            cd idflakies4iFixPlus/
-            # Get current version of iDFlakies
-            if [[ ! -d iDFlakies ]]; then
-                git clone https://github.com/ChopinLi-cp/iDFlakies
+            cd iFixFlakies4iFixPlus/
+            # Get current version of iFixFlakies
+            if [[ ! -d iFixFlakies ]]; then
+                git clone https://github.com/lcpChopin/iFixFlakies.git
                 (
-                    cd iDFlakies/
-                    git checkout -f idflakies4iFixPlus
+                    cd iFixFlakies
+                    git checkout -f iFixFlakies4iFixPlus
                     mvn clean install -DskipTests
                 )
             fi
@@ -70,7 +70,7 @@ function setup() {
     )
 }
 
-setup
+# setup
 createrootfolder_script=$currentDir"/createrootfolders.sh"
 bash $createrootfolder_script
 

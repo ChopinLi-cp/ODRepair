@@ -6,7 +6,7 @@ echo "Starting run_debugging_tools.sh"
 git rev-parse HEAD
 date
 
-if [[ $1 == "" ]] || [[ $2 == "" ]] || [[ $3 == "" ]] || [[ $4 == "" ]]; then
+if [[ $1 == "" ]] || [[ $2 == "" ]] || [[ $3 == "" ]]; then
     echo "arg1 - GitHub SLUG"
     echo "arg2 - sha"
     echo "arg3 - Test name"
@@ -19,7 +19,7 @@ sha=$2
 testName=$3
 moduleName0=$4
 
-rootScriptDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/"
+rootScriptDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 echo "rootScriptDir: $rootScriptDir"
 download_json_script=$rootScriptDir"/download-minimizer-results.sh"
 createfolder_script=$rootScriptDir"/createfolders.sh"
@@ -50,18 +50,19 @@ jsonFold=$rootScriptDir"/jsonFiles_0/"$testName
 echo "json folder: $jsonFold"
 xmlFold=$rootScriptDir"/xmls/"$slug"/"$testName 
 echo "xml folder: $xmlFold"
-rootFold=$rootScriptDir"/roots/"$slug"/"$testName 
+rootFile=$rootScriptDir"/roots/"$slug"/"$testName"/failing_order.txt" 
 diffFold=$rootScriptDir"/diffs/"$slug"/"$testName 
 pkgFold=$rootScriptDir"/pkg/"$slug"/"$testName
 subxmlFold=$rootScriptDir"/subxmls/"$slug"/"$testName
-reflectionFold=$rootScriptDir"/reflection/"$slug"/"$testName
+reflectionFile=$rootScriptDir"/reflection/"$slug"/"$testName"/reflection.txt"
 output=$rootScriptDir"/output/result.csv"
 logFold=$rootScriptDir"/logs/"$slug"/"$testName
 logFile=$logFold"/log"
 moduleFold=$rootScriptDir"/module/"$slug"/"$testName
 moduleFile=$moduleFold"/module"
-allFieldsFold=$rootScriptDir"/allFields/"$slug"/"$testName 
-diffFieldsFold=$rootScriptDir"/diffFields/"$slug"/"$testName 
+allFieldsFile=$rootScriptDir"/allFields/"$slug"/"$testName"/failing_order.txt"
+diffFieldsFile=$rootScriptDir"/diffFields/"$slug"/"$testName"/diffFields.txt"
+eagerLoadFile=$rootScriptDir"/roots/"$slug"/"$testName"/eagerLoadFile.txt"
 subdiffsFold=$rootScriptDir"/subdiffs/"$slug"/"$testName 
 interleave=true
 
@@ -72,7 +73,8 @@ json2=""
 #echo "json2: $json2"
 
 # dir of the input project which is downloaded and whose pom.xml has been modified
-rootDir=${rootScriptDir%/*}
+#rootDir=${rootScriptDir%/*}
+rootDir=${rootScriptDir}
 # echo "ROOTDIR:",$rootDir
 inputProjDir=$rootDir"/projectsInstall/projects/"$slug
 # echo "INPUTPROJDIR:",$inputProjDir
@@ -101,10 +103,11 @@ tmpfile=$rootScriptDir"/tmp"
 MVNOPTIONS="-Ddependency-check.skip=true -Denforcer.skip=true -Drat.skip=true -Dmdep.analyze.skip=true -Dmaven.javadoc.skip=true -Dgpg.skip -Dlicense.skip=true"
 TESTRUNNERVERSION="1.3-SNAPSHOT"
 
-mvn testrunner:testplugin ${MVNOPTIONS} -Ddetector.detector_type=random-class-method -Ddt.detector.original_order.all_must_pass=false -Dtestplugin.runner.capture_state=true -Dtestplugin.javaagent="${HOME}/.m2/repository/edu/illinois/cs/testrunner-running/${TESTRUNNERVERSION}/testrunner-running-${TESTRUNNERVERSION}.jar=$xmlFold,$subxmlFold,$rootFold,$pkgFile,$diffFold,$slug,$testName,$output,$allFieldsFold,$diffFieldsFold,$subdiffsFold,$tmpfile,$reflectionFold" -Dtestplugin.className=edu.illinois.cs.dt.tools.utility.iFixPlusPlugin -Dreplay.path=$json -Dreplay.path2=$json2 -Dreplay.dtname=$testName -Dreplay.subxmlFold=$subxmlFold -Dreplay.slug=$slug -Dreplay.output=$output -Dreplay.module=$moduleName -Dreplay.tmpfile=$tmpfile -Dreplay.diffFieldsFold=$diffFieldsFold -Dreplay.reflectionFold=$reflectionFold -Dtestrunner.interleave=$interleave > $logFile 2>&1
+mvn testrunner:testplugin ${MVNOPTIONS} -Ddetector.detector_type=random-class-method -Ddt.detector.original_order.all_must_pass=false -Dtestplugin.runner.capture_state=true -Dtestplugin.javaagent="${HOME}/.m2/repository/edu/illinois/cs/testrunner-running/${TESTRUNNERVERSION}/testrunner-running-${TESTRUNNERVERSION}.jar=" -Dtestplugin.className=edu.illinois.cs.dt.tools.utility.iFixPlusPlugin -Dreplay.path=$json -Dreplay.path2=$json2 -Dstatecapture.testname=$testName -Dstatecapture.subxmlFold=$subxmlFold -Dstatecapture.rootFile=$rootFile -Dreplay.pkgFile=$pkgFile -Dreplay.diffFold=$diffFold -Dreplay.slug=$slug -Dreplay.output=$output -Dreplay.module=$moduleName -Dstatecapture.allFieldsFile=$allFieldsFile -Dreplay.diffFieldsFile=$diffFieldsFile -Dreplay.subdiffsFold=$subdiffsFold -Dreplay.tmpfile=$tmpfile -Dstatecapture.reflectionFile=$reflectionFile -Dstatecapture.eagerloadfile=$eagerLoadFile -Dtestrunner.interleave=$interleave > $logFile 2>&1
 
+echo $rootFile $allFieldsFile $diffFieldsFile
 # output results
-bash $outputResult_script $rootFold $allFieldsFold $diffFieldsFold >> $output
+bash $outputResult_script $rootFile $allFieldsFile $diffFieldsFile >> $output
 
 
 echo "*******************IFIXPLUS************************"

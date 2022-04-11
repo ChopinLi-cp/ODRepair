@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 
 if [[ $1 == "" ]] || [[ $2 == "" ]] || [[ $3 == "" ]]; then
-    echo "arg1 - rootFold"
-    echo "arg2 - allFieldsFold"
-    echo "arg3 - diffFieldsFold"
+    echo "arg1 - rootFile"
+    echo "arg2 - allFieldsFile"
+    echo "arg3 - diffFieldsFile"
     exit
 fi
 
-rootFold=$1
-allFieldsFold=$2
-diffFieldsFold=$3
+# rootFold=$1
+# allFieldsFold=$2
+# diffFieldsFold=$3
 
-root1=$rootFold"/1.txt"
-field1=$allFieldsFold"/1.txt"
-diffF=$diffFieldsFold"/0.txt"
+root1=$1 # $rootFold"/failing_order.txt"
+field1=$2 # $allFieldsFold"/failing_order.txt"
+diffF=$3 # $diffFieldsFold"/diffFields.txt"
 
 getnum(){
   local arg1=$1

@@ -205,7 +205,7 @@ public class PomFile {
             }
             {
                 Node version = doc.createElement("version");
-                version.setTextContent("1.2-SNAPSHOT");
+                version.setTextContent("1.3-SNAPSHOT");
                 plugin.appendChild(version);
             }
             {
