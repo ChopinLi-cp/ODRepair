@@ -1,0 +1,20 @@
+STATUS: INLINE SUCCESSFUL
+MODIFIED: org.springframework.boot.actuate.autoconfigure.cloudfoundry.reactive.CloudFoundryWebFluxEndpointIntegrationTests.operationWithSecurityInterceptorForbidden
+MODIFIED FILE: /media/psf/Home/Documents/UT-Austin/course/CS393T/project/ODRepair/experiments/_downloads/spring-boot/spring-boot-project/spring-boot-actuator-autoconfigure/src/test/java/org/springframework/boot/actuate/autoconfigure/cloudfoundry/reactive/CloudFoundryWebFluxEndpointIntegrationTests.java
+CLEANER: org.springframework.boot.actuate.autoconfigure.cloudfoundry.reactive.TestMockito.test1
+CLEANER FILE: /media/psf/Home/Documents/UT-Austin/course/CS393T/project/ODRepair/experiments/_downloads/spring-boot/spring-boot-project/spring-boot-actuator-autoconfigure/src/test/java/org/springframework/boot/actuate/autoconfigure/cloudfoundry/reactive/TestMockito.java
+POLLUTER: org.springframework.boot.actuate.autoconfigure.cloudfoundry.reactive.CloudFoundryWebFluxEndpointIntegrationTests.linksToOtherEndpointsForbidden
+POLLUTER FILE: /media/psf/Home/Documents/UT-Austin/course/CS393T/project/ODRepair/experiments/_downloads/spring-boot/spring-boot-project/spring-boot-actuator-autoconfigure/src/test/java/org/springframework/boot/actuate/autoconfigure/cloudfoundry/reactive/CloudFoundryWebFluxEndpointIntegrationTests.java
+ORIGINAL CLEANER SIZE: 13
+NEW CLEANER SIZE: 6
+ELAPSED TIME: 1337.4070000648499
+==========================
+@@ -91,0 +91,8 @@
++ {
++     Class c = Class.forName("org.springframework.boot.actuate.autoconfigure.cloudfoundry.reactive.CloudFoundryWebFluxEndpointIntegrationTests");
++     java.lang.reflect.Field f = c.getDeclaredField("tokenValidator");
++     f.setAccessible(true);
++     Object obj = f.get(null);
++     java.lang.reflect.Method m = org.mockito.Mockito.class.getDeclaredMethod("reset", Object[].class);
++     m.invoke(null, new Object[] { new Object[] { obj } });
++ }
