@@ -1,0 +1,15 @@
+STATUS: INLINE SUCCESSFUL
+MODIFIED: com.alibaba.csp.sentinel.TracerTest.setExceptionsToIgnore
+MODIFIED FILE: /media/psf/Home/Documents/UT-Austin/course/CS393T/project/ODRepair/experiments/_downloads/Sentinel/sentinel-core/src/test/java/com/alibaba/csp/sentinel/TracerTest.java
+CLEANER: com.alibaba.csp.sentinel.TestMockito.test2
+CLEANER FILE: /media/psf/Home/Documents/UT-Austin/course/CS393T/project/ODRepair/experiments/_downloads/Sentinel/sentinel-core/src/test/java/com/alibaba/csp/sentinel/TestMockito.java
+POLLUTER: com.alibaba.csp.sentinel.TracerTest.setExceptionPredicate
+POLLUTER FILE: /media/psf/Home/Documents/UT-Austin/course/CS393T/project/ODRepair/experiments/_downloads/Sentinel/sentinel-core/src/test/java/com/alibaba/csp/sentinel/TracerTest.java
+ORIGINAL CLEANER SIZE: 13
+NEW CLEANER SIZE: 1
+ELAPSED TIME: 195.59999990463257
+==========================
+@@ -77,0 +77,3 @@
++ {
++     com.alibaba.csp.sentinel.Tracer.exceptionPredicate = null;
++ }
