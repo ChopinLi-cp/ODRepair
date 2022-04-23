@@ -4,11 +4,16 @@ import org.apache.bcel.classfile.ClassFormatException;
 import org.apache.bcel.classfile.ClassParser;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
+import org.apache.bcel.classfile.Annotations;
+import org.apache.bcel.classfile.AnnotationEntry;
+import org.apache.bcel.classfile.Attribute;
 import org.apache.bcel.generic.*;
 
 import java.io.IOException;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -117,6 +122,19 @@ public class APISearch {
             }
             // getting static field
             else if (inst instanceof GETSTATIC) {
+                Attribute[] attributes = method.getAttributes();
+
+                for (Attribute attribute : attributes) {
+                    if (attribute instanceof Annotations) {
+                        Annotations annotations = (Annotations) attribute;
+                        AnnotationEntry[] entries = annotations.getAnnotationEntries();
+                        for (AnnotationEntry entry: entries) {
+                            if (entry.getAnnotationType().contains("Lorg/junit/Test;")) {
+                                return isMatch;
+                            }
+                        }
+                    }
+                }
                 String fieldName = clz.getClassName() + "." + ((GETSTATIC) inst).getFieldName(constantPoolGen);
                 Type fieldType = ((GETSTATIC) inst).getFieldType(constantPoolGen);
                 if (fieldName.equals(targetField)) {
