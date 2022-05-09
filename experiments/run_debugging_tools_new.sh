@@ -53,7 +53,7 @@ echo "xml folder: $xmlFold"
 rootFile=$rootScriptDir"/roots/"$slug"/"$testName"/failing_order.txt" 
 diffFold=$rootScriptDir"/diffs/"$slug"/"$testName 
 pkgFold=$rootScriptDir"/pkg/"$slug"/"$testName
-subxmlFold=$rootScriptDir"/subxmls/"$slug"/"$testName
+xmlDir=$rootScriptDir"/subxmls/"$slug"/"$testName
 reflectionFile=$rootScriptDir"/reflection/"$slug"/"$testName"/reflection.txt"
 output=$rootScriptDir"/output/result.csv"
 logFold=$rootScriptDir"/logs/"$slug"/"$testName
@@ -103,7 +103,7 @@ tmpfile=$rootScriptDir"/tmp"
 MVNOPTIONS="-Ddependency-check.skip=true -Denforcer.skip=true -Drat.skip=true -Dmdep.analyze.skip=true -Dmaven.javadoc.skip=true -Dgpg.skip -Dlicense.skip=true"
 TESTRUNNERVERSION="1.3-SNAPSHOT"
 
-mvn testrunner:testplugin ${MVNOPTIONS} -Ddetector.detector_type=random-class-method -Ddt.detector.original_order.all_must_pass=false -Dtestplugin.runner.capture_state=true -Dtestplugin.javaagent="${HOME}/.m2/repository/edu/illinois/cs/testrunner-running/${TESTRUNNERVERSION}/testrunner-running-${TESTRUNNERVERSION}.jar=" -Dtestplugin.className=edu.illinois.cs.dt.tools.utility.iFixPlusPlugin -Dreplay.path=$json -Dreplay.path2=$json2 -Dstatecapture.testname=$testName -Dstatecapture.subxmlFold=$subxmlFold -Dstatecapture.rootFile=$rootFile -Dreplay.pkgFile=$pkgFile -Dreplay.diffFold=$diffFold -Dreplay.slug=$slug -Dreplay.output=$output -Dreplay.module=$moduleName -Dstatecapture.allFieldsFile=$allFieldsFile -Dreplay.diffFieldsFile=$diffFieldsFile -Dreplay.subdiffsFold=$subdiffsFold -Dreplay.tmpfile=$tmpfile -Dstatecapture.reflectionFile=$reflectionFile -Dstatecapture.eagerloadfile=$eagerLoadFile -Dtestrunner.interleave=$interleave > $logFile 2>&1
+mvn testrunner:testplugin ${MVNOPTIONS} -Ddetector.detector_type=random-class-method -Ddt.detector.original_order.all_must_pass=false -Dtestplugin.runner.capture_state=true -Dtestplugin.javaagent="${HOME}/.m2/repository/edu/illinois/cs/testrunner-running/${TESTRUNNERVERSION}/testrunner-running-${TESTRUNNERVERSION}.jar=" -Dtestplugin.className=edu.illinois.cs.dt.tools.utility.iFixPlusPlugin -Dreplay.path=$json -Dreplay.path2=$json2 -Dstatecapture.testname=$testName -Dstatecapture.xmlDir=$xmlDir -Dstatecapture.rootFile=$rootFile -Dreplay.pkgFile=$pkgFile -Dreplay.diffFold=$diffFold -Dreplay.slug=$slug -Dreplay.output=$output -Dreplay.module=$moduleName -Dstatecapture.allFieldsFile=$allFieldsFile -Dreplay.diffFieldsFile=$diffFieldsFile -Dreplay.subdiffsFold=$subdiffsFold -Dreplay.tmpfile=$tmpfile -Dstatecapture.reflectionFile=$reflectionFile -Dstatecapture.eagerloadfile=$eagerLoadFile -Dtestrunner.interleave=$interleave > $logFile 2>&1
 
 echo $rootFile $allFieldsFile $diffFieldsFile
 # output results
